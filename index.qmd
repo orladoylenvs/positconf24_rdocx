@@ -1,0 +1,209 @@
+---
+title: <span style="color:white"> </span>
+subtitle: <span style="color:white"></span>
+format:
+  revealjs: 
+    slide-number: true
+    chalkboard: 
+      buttons: false
+    preview-links: auto
+    navigation-mode: linear
+    controls-layout: edges
+    controls-tutorial: true
+    logo: images/novartis_logo.png
+    title-slide-attributes:
+      data-background-image: "images/title.png"
+      data-background-size: cover
+      data-background-opacity: "1"
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c/t' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>
+---
+
+## Disclaimer{.smaller}
+
+- This presentation is based on publicly available information (including data relating to non-Novartis products or approaches).  
+- The views presented are the views of the presenter, not necessarily those of Novartis.    
+- These slides are intended for educational purposes only and for the personal use of the audience. These slides are not intended for wider distribution outside the intended purpose without presenter approval.   
+- The content of this slide deck is accurate to the best of the presenter’s knowledge at the time of production. 
+
+## The process of clinical drug developed is highly regulated{.smaller}
+
+> In clinical drug development the goal is produce reliable evidence that a product is safe and efficacious 
+
+This process involves multi-disciplinary stakeholders coming together to review evidence which is generated a highly regulated manner. 
+
+. . . 
+
+::: {.callout-note}
+# What does it mean to be *regulated* when it comes to the analysis reporting of clinical trials? 
+1. Traceability: please describe all the transformations from source data to analysis-ready datasets?     
+2. Reproducible: can you provide all the data dependencies and the code used to generate that figure?
+3. Accuracy: can you describe how you ensuring your results are accurate? 
+:::
+
+
+## How do we manage tech evolution and adaption in pharma? 
+- Big-bang, disrutptive change takes time in a regulated environment.  
+
+- Non-disruptive change can help us make incremental progress to get ready for change. 
+
+:::{.callout-tip}
+# Non-disruptive change for automated report generation
+The evidence we generate for the safety and efficacy of products is often presented using static documents (e.g. docx) for our highly multi-disciplinary team.   
+Let's bring the modern tooling and practices to report generation!
+:::
+
+
+## Typical workflow from data to evidence
+![](images/workflow_old.png)  
+
+- Report generation relies on copying and pasting static outputs into a document
+- This can be error prone, time consuming and doesn't scale. 
+
+## Additional pathway using {rdocx}
+![](images/workflow_new.png)
+
+
+- We combine a new package {rdocx} that can generate company compliant report with a process that leverages good software development practices. 
+
+## Use case (1): Sample size report generation
+Our trial statisticans estimate and document the sample size for studies using a company template in docx format. It is mandatory that the report complies with the company template.  
+
+# First use case
+::: {.column-page align="center"}
+Sample size documentation in R:
+
+  1. Populate Rmd template.
+  2. Render file.
+  3. Inspect generated Word document.
+:::
+  
+## Mandatory report elements: title page
+
+Mandatory elements are represented as R6 classes where each attribute has a unique input requirement that goes through a series of checks.
+
+:::: {.columns}
+::: {.column width="52%"}
+
+```{r, eval=FALSE, echo=TRUE}
+tp <- rdocx::TitlePage$new(
+  compound= "Compound",
+  study_number = "Study number",
+  study_title = "Study title",
+  doc_status = "Final",
+  release_date  = "01-Jul-2024",
+  n_pages = "10")
+
+# Generates the title page
+tp$get_title_page()
+```
+:::
+
+::: {.column width="48%"}
+
+![](images/document_title.png){width="95%" fig-align="center"}
+
+:::
+::::
+
+
+
+
+
+## How to populate mandatory tables
+
+::: {.column-page}
+```{r, eval=FALSE, echo=TRUE}
+# Initiate change log table
+changelog_table <- rdocx::ChangelogTable$new() 
+ 
+row_1 <- rdocx::ChangelogTableRow$new(
+  date = '01-Feb-2024',
+  time_point = 'Before protocol finalization',
+  reason_update = 'Creation of first version',
+  outcome_update = 'NA - First version',
+  section_title_impacted = 'NA')
+
+changelog_table$add_row(row_1)
+
+```
+
+:::
+
+
+## How to render the document
+
+Check document template and render:
+
+```{r, eval=FALSE, echo=TRUE}
+rdocx::print_ss_template_version()
+```
+
+::: {.fragment}
+
+```{r, eval=FALSE, echo=TRUE}
+rdocx::rmd_render(
+  rmd_filename = "path/to/rmd_file",
+  output_path= "path/to/final_docx",
+  report_type = "sample_size",
+  version = 00
+)
+```
+:::
+
+::: {.fragment}
+A log file will be generated documenting the following:
+
+:::{.column-page style="font-size: 80%;"}
+- User, system, date and time
+- Final document name and location
+- Location of R packages and R session info (`sessionInfo()`)
+:::
+:::
+
+
+## Inspect compiled document
+
+::: {.scroll-container style="overflow-y: scroll; height: 400px;"}
+![](images/document_overview.png){fig-align="center" width="100%"}
+
+:::
+
+<br>
+
+::: {.column-page style="font-size: 70%;"}
+The template is copyright protected by Novartis and should not be used for template preparation.
+:::
+
+## Software development practices further enhance how we work
+
+We use object-oriented (R6 classes) to structure our package. 
+
+Assertions
+
+:::: {.columns}
+::: {.column}
+We have automated tests and check for each incremental change in to the rdocx pacakge. 
+:::
+::: {.column}
+![](images/rdocxCICD.png)
+:::
+:::: 
+
+
