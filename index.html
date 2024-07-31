@@ -410,10 +410,10 @@
 <li>The content of this slide deck is accurate to the best of the presenter’s knowledge at the time of production.&nbsp;</li>
 </ul>
 </section>
-<section id="the-process-of-clinical-drug-developed-is-highly-regulated" class="slide level2 smaller">
-<h2>The process of clinical drug developed is highly regulated</h2>
+<section id="the-process-of-clinical-drug-development-is-highly-regulated" class="slide level2 smaller">
+<h2>The process of clinical drug development is highly regulated</h2>
 <blockquote>
-<p>In clinical drug development the goal is produce reliable evidence that a product is safe and efficacious</p>
+<p>In clinical drug development the goal is produce reliable evidence on whether or not a product is both safe and efficacious</p>
 </blockquote>
 <p>This process involves multi-disciplinary stakeholders coming together to review evidence which is generated a highly regulated manner.</p>
 <div class="fragment">
@@ -423,14 +423,14 @@
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>What does it mean to be <em>regulated</em> when it comes to the analysis reporting of clinical trials?</strong></p>
+<p><strong>Working a regulated way as a statistician or programmer in pharma has three key pillars?</strong></p>
 </div>
 <div class="callout-content">
 <ol type="1">
-<li>Traceability: please describe all the transformations from source data to analysis-ready datasets?<br>
+<li>Traceable<br>
 </li>
-<li>Reproducible: can you provide all the data dependencies and the code used to generate that figure?</li>
-<li>Accuracy: can you describe how you ensuring your results are accurate?</li>
+<li>Reproducible</li>
+<li>Accurate</li>
 </ol>
 </div>
 </div>
@@ -443,6 +443,7 @@
 <li><p>Big-bang, disrutptive change takes time in a regulated environment.</p></li>
 <li><p>Non-disruptive change can help us make incremental progress to get ready for change.</p></li>
 </ul>
+<div class="fragment">
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -452,16 +453,16 @@
 <p><strong>Non-disruptive change for automated report generation</strong></p>
 </div>
 <div class="callout-content">
-<p>The evidence we generate for the safety and efficacy of products is often presented using static documents (e.g.&nbsp;docx) for our highly multi-disciplinary team.<br>
-Let’s bring the modern tooling and practices to report generation!</p>
+<p>Let’s bring the modern tooling and practices to static document generation so that we can retain reproducibilty and work at scale.</p>
+</div>
 </div>
 </div>
 </div>
 </section>
-<section id="typical-workflow-from-data-to-evidence" class="slide level2">
-<h2>Typical workflow from data to evidence</h2>
+<section id="from-data-to-evidence" class="slide level2">
+<h2>From data to evidence</h2>
 
-<img data-src="images/workflow_old.png" class="r-stretch"><ul>
+<img data-src="images/workflow_old.png" style="width:60.0%" class="r-stretch"><ul>
 <li>Report generation relies on copying and pasting static outputs into a document</li>
 <li>This can be error prone, time consuming and doesn’t scale.</li>
 </ul>
@@ -469,28 +470,48 @@ Let’s bring the modern tooling and practices to report generation!</p>
 <section id="additional-pathway-using-rdocx" class="slide level2">
 <h2>Additional pathway using {rdocx}</h2>
 
-<img data-src="images/workflow_new.png" class="r-stretch"><ul>
-<li>We combine a new package {rdocx} that can generate company compliant report with a process that leverages good software development practices.</li>
+<img data-src="images/workflow_new.png" style="width:60.0%" class="r-stretch"><ul>
+<li>We created a new package {rdocx} and process that leverages good data science practices that can generate company compliant reports</li>
 </ul>
 </section>
-<section id="use-case-1-sample-size-report-generation" class="slide level2">
-<h2>Use case (1): Sample size report generation</h2>
+<section id="use-case-sample-size-estimation-and-reporting" class="slide level2">
+<h2>Use case: sample size estimation and reporting</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>What: Sample size report generation</strong></p>
+</div>
+<div class="callout-content">
 <p>Our trial statisticans estimate and document the sample size for studies using a company template in docx format. It is mandatory that the report complies with the company template.</p>
-</section>
-<section>
-<section id="first-use-case" class="title-slide slide level1 center">
-<h1>First use case</h1>
-<div class="column-page" data-align="center">
-<p>Sample size documentation in R:</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>How: successful development and change is so much more than good code</strong></p>
+</div>
+<div class="callout-content">
 <ol type="1">
-<li>Populate Rmd template.</li>
-<li>Render file.</li>
-<li>Inspect generated Word document.</li>
+<li>Get experts onboard (compliance, statisicians)</li>
+<li>Co-design</li>
+<li>Leverage good software development practices</li>
+<li>Develop incrementally, demo-ing regularly</li>
 </ol>
 </div>
+</div>
+</div>
+</div>
 </section>
-<section id="mandatory-report-elements-title-page" class="slide level2">
-<h2>Mandatory report elements: title page</h2>
+<section id="lets-make-a-title-page" class="slide level2 smaller">
+<h2>Let’s make a title page</h2>
 <p>Mandatory elements are represented as R6 classes where each attribute has a unique input requirement that goes through a series of checks.</p>
 <div class="columns">
 <div class="column" style="width:52%;">
@@ -514,9 +535,11 @@ Let’s bring the modern tooling and practices to report generation!</p>
 </div>
 </div></div>
 </section>
-<section id="how-to-populate-mandatory-tables" class="slide level2">
-<h2>How to populate mandatory tables</h2>
-<div class="column-page">
+<section id="lets-make-a-change-log" class="slide level2 smaller">
+<h2>Let’s make a change log</h2>
+<p>Mandatory elements are represented as R6 classes where each attribute has a unique input requirement that goes through a series of checks.</p>
+<div class="columns">
+<div class="column" style="width:52%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="co"># Initiate change log table</span></span>
 <span id="cb2-2"><a href=""></a>changelog_table <span class="ot">&lt;-</span> rdocx<span class="sc">::</span>ChangelogTable<span class="sc">$</span><span class="fu">new</span>() </span>
@@ -530,10 +553,16 @@ Let’s bring the modern tooling and practices to report generation!</p>
 <span id="cb2-10"><a href=""></a></span>
 <span id="cb2-11"><a href=""></a>changelog_table<span class="sc">$</span><span class="fu">add_row</span>(row_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div><div class="column" style="width:48%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/changelogtab.png" class="quarto-figure quarto-figure-center" style="width:95.0%"></p>
+</figure>
 </div>
+</div></div>
 </section>
-<section id="how-to-render-the-document" class="slide level2">
-<h2>How to render the document</h2>
+<section id="lets-make-a-complete-report" class="slide level2">
+<h2>Let’s make a complete report</h2>
 <p>Check document template and render:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>rdocx<span class="sc">::</span><span class="fu">print_ss_template_version</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -573,23 +602,53 @@ Let’s bring the modern tooling and practices to report generation!</p>
 <p>The template is copyright protected by Novartis and should not be used for template preparation.</p>
 </div>
 </section>
-<section id="software-development-practices-further-enhance-how-we-work" class="slide level2">
-<h2>Software development practices further enhance how we work</h2>
+<section id="we-embedded-rdocx-in-good-software-development-practices" class="slide level2">
+<h2>We embedded {rdocx} in good software development practices</h2>
 <p>We use object-oriented (R6 classes) to structure our package.</p>
-<p>Assertions</p>
-<div class="columns">
-<div class="column">
-<p>We have automated tests and check for each incremental change in to the rdocx pacakge.</p>
-</div><div class="column">
-<p><img data-src="images/rdocxCICD.png"></p>
-</div></div>
+
+<img data-src="images/rdocx_structure_1.jpg" class="r-stretch"></section>
+<section id="we-embedded-rdocx-in-good-software-development-practices-1" class="slide level2">
+<h2>We embedded {rdocx} in good software development practices</h2>
+<p>We could create many assertions to do perform upfront checks.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>tp <span class="ot">&lt;-</span> rdocx<span class="sc">::</span>TitlePage<span class="sc">$</span><span class="fu">new</span>(</span>
+<span id="cb5-2"><a href=""></a>  <span class="at">compound=</span> <span class="st">"Compound"</span>,</span>
+<span id="cb5-3"><a href=""></a>  <span class="at">study_number =</span> <span class="st">"Study number"</span>,</span>
+<span id="cb5-4"><a href=""></a>  <span class="at">study_title =</span> <span class="st">"Study title"</span>,</span>
+<span id="cb5-5"><a href=""></a>  <span class="at">doc_status =</span> <span class="st">"Final"</span>,</span>
+<span id="cb5-6"><a href=""></a>  <span class="at">release_date  =</span> <span class="st">"01-07-2024"</span>,</span>
+<span id="cb5-7"><a href=""></a>  <span class="at">n_pages =</span> <span class="st">"10"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>Error in check_string_is_date(release_date) : 
+  `Date` was not provided in the expected format (%d-%b-%Y). For example: 01-Oct-2023</code></pre>
+</section>
+<section id="we-embedded-rdocx-in-good-software-development-practices-2" class="slide level2">
+<h2>We embedded {rdocx} in good software development practices</h2>
+<p>We have automated tests and check for each incremental change in to the rdocx package.</p>
+
+<img data-src="images/rdocxCICD.png" class="r-stretch"></section>
+<section id="whats-next" class="slide level2">
+<h2>What’s next</h2>
+<ul>
+<li>We plan to open-source our {rdocx} package with a generic template example</li>
+<li>We want to adapt it to more use-cases, e.g.&nbsp;pre-clinical safety report</li>
+</ul>
+</section>
+<section id="acknowledgements" class="slide level2">
+<h2>Acknowledgements</h2>
+<ul>
+<li>Jana Linnik (Developer and SME)</li>
+<li>Ines Gimeno Molina (Developer)</li>
+<li>Ivan Demin (Contributor)</li>
+<li>Maritza Cuero Melendez (Compliance)</li>
+</ul>
 <div class="quarto-auto-generated-content">
 <p><img src="images/novartis_logo.png" class="slide-logo"></p>
 <div class="footer footer-default">
 
 </div>
 </div>
-</section></section>
+</section>
     </div>
   </div>
 

@@ -42,19 +42,19 @@ include-after: |
 - These slides are intended for educational purposes only and for the personal use of the audience. These slides are not intended for wider distribution outside the intended purpose without presenter approval.   
 - The content of this slide deck is accurate to the best of the presenter’s knowledge at the time of production. 
 
-## The process of clinical drug developed is highly regulated{.smaller}
+## The process of clinical drug development is highly regulated{.smaller}
 
-> In clinical drug development the goal is produce reliable evidence that a product is safe and efficacious 
+> In clinical drug development the goal is produce reliable evidence on whether or not a product is both safe and efficacious 
 
 This process involves multi-disciplinary stakeholders coming together to review evidence which is generated a highly regulated manner. 
 
 . . . 
 
 ::: {.callout-note}
-# What does it mean to be *regulated* when it comes to the analysis reporting of clinical trials? 
-1. Traceability: please describe all the transformations from source data to analysis-ready datasets?     
-2. Reproducible: can you provide all the data dependencies and the code used to generate that figure?
-3. Accuracy: can you describe how you ensuring your results are accurate? 
+# Working a regulated way as a statistician or programmer in pharma has three key pillars? 
+1. Traceable   
+2. Reproducible
+3. Accurate
 :::
 
 
@@ -63,38 +63,48 @@ This process involves multi-disciplinary stakeholders coming together to review 
 
 - Non-disruptive change can help us make incremental progress to get ready for change. 
 
+. . . 
+
 :::{.callout-tip}
-# Non-disruptive change for automated report generation
-The evidence we generate for the safety and efficacy of products is often presented using static documents (e.g. docx) for our highly multi-disciplinary team.   
-Let's bring the modern tooling and practices to report generation!
+# Non-disruptive change for automated report generation 
+Let's bring the modern tooling and practices to static document generation so that we can retain reproducibilty and work at scale. 
 :::
 
 
-## Typical workflow from data to evidence
-![](images/workflow_old.png)  
+## From data to evidence
+![](images/workflow_old.png){width="60%"}  
 
 - Report generation relies on copying and pasting static outputs into a document
 - This can be error prone, time consuming and doesn't scale. 
 
 ## Additional pathway using {rdocx}
-![](images/workflow_new.png)
+![](images/workflow_new.png){width="60%"}
 
 
-- We combine a new package {rdocx} that can generate company compliant report with a process that leverages good software development practices. 
+- We created a new package {rdocx} and process that leverages good data science practices that can generate company compliant reports
 
-## Use case (1): Sample size report generation
-Our trial statisticans estimate and document the sample size for studies using a company template in docx format. It is mandatory that the report complies with the company template.  
 
-# First use case
-::: {.column-page align="center"}
-Sample size documentation in R:
+## Use case: sample size estimation and reporting
+::: {.callout-note}
+# What: Sample size report generation
+Our trial statisticans estimate and document the sample size for studies using a company template in docx format. It is mandatory that the report complies with the company template.
 
-  1. Populate Rmd template.
-  2. Render file.
-  3. Inspect generated Word document.
 :::
+
+. . . 
+
+::: {.callout-tip}
+# How: successful development and change is so much more than good code
+
+  1. Get experts onboard (compliance, statisicians)
+  2. Co-design
+  3. Leverage good software development practices
+  4. Develop incrementally, demo-ing regularly
+
+:::
+
   
-## Mandatory report elements: title page
+## Let's make a title page {.smaller}
 
 Mandatory elements are represented as R6 classes where each attribute has a unique input requirement that goes through a series of checks.
 
@@ -120,15 +130,15 @@ tp$get_title_page()
 ![](images/document_title.png){width="95%" fig-align="center"}
 
 :::
+
 ::::
 
+## Let's make a change log{.smaller}
 
+Mandatory elements are represented as R6 classes where each attribute has a unique input requirement that goes through a series of checks.
 
-
-
-## How to populate mandatory tables
-
-::: {.column-page}
+:::: {.columns}
+::: {.column width="52%"}
 ```{r, eval=FALSE, echo=TRUE}
 # Initiate change log table
 changelog_table <- rdocx::ChangelogTable$new() 
@@ -147,7 +157,15 @@ changelog_table$add_row(row_1)
 :::
 
 
-## How to render the document
+::: {.column width="48%"}
+
+![](images/changelogtab.png){width="95%" fig-align="center"}
+
+:::
+::::
+
+
+## Let's make a complete report
 
 Check document template and render:
 
@@ -191,19 +209,45 @@ A log file will be generated documenting the following:
 The template is copyright protected by Novartis and should not be used for template preparation.
 :::
 
-## Software development practices further enhance how we work
+## We embedded {rdocx} in good software development practices
 
 We use object-oriented (R6 classes) to structure our package. 
 
-Assertions
+![](images/rdocx_structure_1.jpg)
 
-:::: {.columns}
-::: {.column}
-We have automated tests and check for each incremental change in to the rdocx pacakge. 
-:::
-::: {.column}
+## We embedded {rdocx} in good software development practices
+
+We could create many assertions to do perform upfront checks. 
+```{r, eval=FALSE, echo=TRUE}
+tp <- rdocx::TitlePage$new(
+  compound= "Compound",
+  study_number = "Study number",
+  study_title = "Study title",
+  doc_status = "Final",
+  release_date  = "01-07-2024",
+  n_pages = "10")
+```
+
+
+```
+Error in check_string_is_date(release_date) : 
+  `Date` was not provided in the expected format (%d-%b-%Y). For example: 01-Oct-2023
+``` 
+## We embedded {rdocx} in good software development practices
+
+We have automated tests and check for each incremental change in to the rdocx package. 
+
 ![](images/rdocxCICD.png)
-:::
-:::: 
+
+## What's next
+
+- We plan to open-source our {rdocx} package with a generic template example
+- We want to adapt it to more use-cases, e.g. pre-clinical safety report
+
+## Acknowledgements
+- Jana Linnik (Developer and SME)
+- Ines Gimeno Molina (Developer)
+- Ivan Demin (Contributor)
+- Maritza Cuero Melendez (Compliance)
 
 
