@@ -22,13 +22,13 @@ jobs:
       # Install pandoc
       - uses: r-lib/actions/setup-pandoc@v2
 
-      # Render the qmd file into qmd/
+      # Render the qmd file
       - name: Render Quarto Slides
         shell: Rscript {0}
         run: quarto::quarto_render("index.qmd")
 
-      # Publish rmd/ to GitHub pages
+      # Publish to GitHub pages
       - name: Publish to GitHub pages 🚀
         uses: JamesIves/github-pages-deploy-action@v4.5.0
         with:
-          folder: qmd
+          folder: .
